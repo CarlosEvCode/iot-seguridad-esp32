@@ -340,3 +340,71 @@ Después de importar y configurar:
 - La consola de Node-RED (abajo) no debe mostrar errores en rojo
 - MongoDB Compass debe mostrar documentos llegando en la colección `eventos_puerta`
 - El flow debe indicar estado "connected" en los nodos MQTT y MongoDB
+
+## SECCIÓN 9: CONFIGURACIÓN DEL BACKEND
+
+### Descripción
+El backend es una API REST construida con Node.js y Express. Su función principal es actuar como un intermediario seguro entre la base de datos MongoDB y la interfaz de usuario, garantizando que no se expongan conexiones directas ni credenciales de base de datos en el cliente.
+
+### Instalación y Ejecución
+Abre tu terminal, navega hasta la carpeta `backend/` del proyecto y ejecuta los siguientes comandos:
+
+```bash
+# 1. Instalar las dependencias (express, mongodb, cors)
+npm install
+
+# 2. Iniciar el servidor API
+node server.js
+```
+
+Si la conexión es exitosa, la consola mostrará:
+
+```
+[EXITO] Conectado exitosamente a MongoDB
+[SISTEMA] Servidor corriendo en el puerto 3000
+```
+
+### Rutas de la API
+
+**Endpoint: GET /api/datos**
+
+**Función:** Recupera los últimos 10 eventos ordenados de forma descendente (del más reciente al más antiguo) y los devuelven en formato JSON con políticas CORS habilitadas para evitar bloqueos del navegador.
+
+## SECCIÓN 10: CONFIGURACIÓN DEL FRONTEND
+
+### Descripción
+
+El dashboard es una aplicación web dinámica (SPA) construida en HTML, CSS y Vanilla JavaScript. Muestra el estado actual de los sensores y el historial de eventos solicitando los datos al backend de forma asíncrona.
+
+### Ejecución de la Interfaz
+
+El frontend realiza peticiones locales mediante la función Fetch, por lo que debe ser ejecutado a través de un servidor HTTP local.
+
+**Opción A: En Windows (VSCode)**
+
+1. Instala la extensión Live Server en VSCode.
+2. Haz clic derecho sobre el archivo `index.html`.
+3. Selecciona "Open with Live Server".
+
+**Opción B: Por línea de comandos (Python)**
+
+Abre una terminal en la carpeta `frontend/` y ejecuta el servidor nativo de Python:
+
+```bash
+# Para Linux / macOS
+python3 -m http.server 8080
+
+# Para Windows
+python -m http.server 8080
+```
+
+Una vez ejecutado el comando, abre tu navegador web y dirígete a: `http://localhost:8080`
+
+### Lógica de Actualización (Polling)
+
+Para mantener la información en tiempo real sin saturar la red, la aplicación no requiere recargar la página. El archivo `app.js` contiene un temporizador interno que consulta al servidor de forma silenciosa cada cierto tiempo:
+
+```javascript
+// El panel web se actualiza automáticamente cada 2 segundos
+setInterval(refrescarDatos, 2000);
+```
