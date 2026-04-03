@@ -129,19 +129,22 @@ iot-seguridad-esp32/
 ```bash
 node --version
 npm --version
+```
 
-SECCIÓN 4: INSTALACIÓN DE NODE-RED
+## SECCIÓN 4: INSTALACIÓN DE NODE-RED
 ¿Qué es Node-RED y por qué lo usamos?
 Node-RED es una herramienta de programación visual que funciona como el "Middleware" del sistema. Se encarga de recibir los eventos MQTT del ESP32, procesarlos y almacenarlos en la base de datos.
 
 Instalación (Windows y Linux)
 Abre tu terminal (CMD, PowerShell o Bash) y ejecuta los siguientes comandos:
 
+```bash
 # 1. Instalar Node-RED globalmente en el sistema
 npm install -g node-red
 
 # 2. Iniciar el servidor
 node-red
+```
 
 Una vez iniciado, accede a la interfaz gráfica abriendo http://localhost:1880 en tu navegador.
 
@@ -154,36 +157,7 @@ Haz clic en instalar.
 
 Detén el servidor en la terminal (Ctrl+C) y vuelve a ejecutar node-red para aplicar los cambios.
 
-Gemini ha dicho
-Aquí tienes la continuación exacta para que la pegues justo debajo de los comandos de Node.js en tu archivo.
-
-Copia este bloque completo:
-
-SECCIÓN 4: INSTALACIÓN DE NODE-RED
-¿Qué es Node-RED y por qué lo usamos?
-Node-RED es una herramienta de programación visual que funciona como el "Middleware" del sistema. Se encarga de recibir los eventos MQTT del ESP32, procesarlos y almacenarlos en la base de datos.
-
-Instalación (Windows y Linux)
-Abre tu terminal (CMD, PowerShell o Bash) y ejecuta los siguientes comandos:
-
-Bash
-# 1. Instalar Node-RED globalmente en el sistema
-npm install -g node-red
-
-# 2. Iniciar el servidor
-node-red
-Una vez iniciado, accede a la interfaz gráfica abriendo http://localhost:1880 en tu navegador.
-
-Instalación de nodos de MongoDB
-En Node-RED, ve al menú superior derecho (☰) y selecciona Manage Palette.
-
-Ve a la pestaña Install y busca node-red-node-mongodb.
-
-Haz clic en instalar.
-
-Detén el servidor en la terminal (Ctrl+C) y vuelve a ejecutar node-red para aplicar los cambios.
-
-SECCIÓN 5: INSTALACIÓN DE MONGODB
+## SECCIÓN 5: INSTALACIÓN DE MONGODB
 ¿Qué es MongoDB y por qué lo usamos?
 Es una base de datos NoSQL que almacena la información en formato JSON nativo, ideal para procesar y guardar directamente los datos IoT generados por Node-RED.
 
@@ -198,13 +172,16 @@ Sigue el asistente para instalar también MongoDB Compass (interfaz visual).
 
 Para verificar que el servicio está activo, abre PowerShell y ejecuta:
 
+```powershell
 Get-Service -Name MongoDB
+```
 
 
 Instalación en Linux (Ubuntu/Debian)
 
 Abre tu terminal y ejecuta:
 
+```bash
 # Instalar MongoDB desde repositorios oficiales
 sudo apt-get install mongodb
 
@@ -213,6 +190,7 @@ sudo systemctl start mongodb
 
 # Verificar el estado del servicio
 sudo systemctl status mongodb
+```
 
 Base de datos del proyecto
 Nombre de BD: puerta_inteligente
