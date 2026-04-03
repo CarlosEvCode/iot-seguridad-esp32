@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "author": "Carlos M",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": -200, "attrs": {} },
+    { "type": "wokwi-breadboard", "id": "bb1", "top": 227.4, "left": -208.4, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -147.2,
+      "left": 24.8,
+      "attrs": { "pins": "i2c" }
+    },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -238.5, "left": -100.1, "attrs": {} },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad1",
+      "top": -213.2,
+      "left": 370.4,
+      "attrs": {}
+    },
+    { "type": "wokwi-buzzer", "id": "bz1", "top": 2.4, "left": 69, "attrs": { "volume": "0.1" } },
+    { "type": "wokwi-led", "id": "led1", "top": 350, "left": -50, "attrs": { "color": "red" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 390, "left": -50, "attrs": { "value": "220" } },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": 524.2,
+      "left": -143,
+      "rotate": 90,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:5V", "bb1:tp.1", "red", [ "h-35.01", "v19.2", "h68" ] ],
+    [ "esp:GND.1", "bb1:tn.1", "black", [ "h-54.21", "v105.6", "h87.2" ] ],
+    [ "bb1:tp.1", "bb1:bp.1", "red", [ "h-77.6", "v174" ] ],
+    [ "bb1:tn.1", "bb1:bn.1", "black", [ "h-96.8", "v174" ] ],
+    [ "bb1:tp.29", "bb1:tp.32", "red", [] ],
+    [ "bb1:tn.29", "bb1:tn.32", "black", [] ],
+    [ "bb1:bp.29", "bb1:bp.32", "red", [] ],
+    [ "bb1:bn.29", "bb1:bn.32", "black", [] ],
+    [ "lcd1:VCC", "bb1:tp.10", "red", [] ],
+    [ "lcd1:GND", "bb1:tn.10", "black", [ "h-105.6", "v364.9" ] ],
+    [ "lcd1:SDA", "esp:21", "blue", [ "h-190.4", "v175.8" ] ],
+    [ "lcd1:SCL", "esp:22", "purple", [ "h-180.8", "v137.5" ] ],
+    [ "servo1:V+", "bb1:bp.20", "red", [ "v-28.8", "h115.9" ] ],
+    [ "servo1:GND", "bb1:bn.20", "black", [ "v-48", "h48", "v-56.3" ] ],
+    [ "servo1:PWM", "esp:13", "orange", [ "h-221", "v-336" ] ],
+    [ "ultrasonic1:VCC", "bb1:tp.15", "red", [ "h-0.1", "v266.4" ] ],
+    [ "ultrasonic1:GND", "bb1:tn.15", "black", [ "h-1.2", "v393.7" ] ],
+    [ "ultrasonic1:TRIG", "esp:26", "yellow", [ "v7.5", "h-211.7", "v163.2" ] ],
+    [ "ultrasonic1:ECHO", "esp:27", "green", [ "v26.7", "h-240.9", "v153.6" ] ],
+    [ "bz1:1", "bb1:tn.20", "black", [ "v28.8", "h-37.6" ] ],
+    [ "bz1:2", "esp:12", "red", [ "h-115.6", "v-105.6", "h-297.6", "v163.2" ] ],
+    [ "r1:1", "bb1:bn.5", "black", [] ],
+    [ "r1:2", "led1:C", "black", [] ],
+    [ "led1:A", "esp:25", "gold", [ "h-243.8", "v-286.4" ] ],
+    [ "keypad1:R1", "esp:19", "green", [ "h-451.2", "v-259.2" ] ],
+    [ "keypad1:R2", "esp:18", "green", [ "v38.4", "h-442", "v-288" ] ],
+    [ "keypad1:R3", "esp:5", "green", [ "v8.2", "h-432.3", "v-248.2" ] ],
+    [ "keypad1:R4", "esp:17", "green", [ "v17.8", "h-422.6", "v-248.2" ] ],
+    [ "keypad1:C1", "esp:16", "green", [ "v27.4", "h-412.9", "v-248.2" ] ],
+    [ "keypad1:C2", "esp:4", "green", [ "v-11", "h-412.8", "v-200.2" ] ],
+    [ "keypad1:C3", "esp:2", "green", [ "v-22", "h-412.95", "v-170" ] ],
+    [ "keypad1:C4", "esp:15", "green", [ "v-31.6", "h-403.5", "v-150.8" ] ]
+  ],
+  "serialMonitor": { "display": "always" },
+  "dependencies": {}
+}

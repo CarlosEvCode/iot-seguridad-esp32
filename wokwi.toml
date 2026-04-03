@@ -1,0 +1,5 @@
+[wokwi]
+version = 1
+firmware = '.pio/build/esp32vn-iot-uno/firmware.bin'
+elf = '.pio/build/esp32vn-iot-uno/firmware.elf'
+rfc2217ServerPort = 4000

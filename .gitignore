@@ -1,0 +1,40 @@
+# PlatformIO
+.pio
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js / npm
+node_modules/
+package-lock.json
+npm-debug.log
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+.env.local
+
+# Build
+build/
+dist/
+*.o
+*.a
+*.so
+*.elf
+*.hex
+*.bin
+
+# Node-RED backups
+flow.json.backup
+flow.json.before-fix
+flow_serial.json.backup
+flow_serial.json.before-fix
