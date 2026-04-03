@@ -239,3 +239,43 @@ El simulador incluye:
 - **Teclado 4x4** - Permite ingresar contraseña
 - **LED** - Indicador visual de estado
 - **Buzzer** - Indicador sonoro
+
+## SECCIÓN 7: COMPILACIÓN DEL FIRMWARE
+
+### Proceso de Compilación
+El código fuente reside en la ruta `src/main.cpp`. Se utiliza el entorno de PlatformIO para compilar el firmware que será ejecutado por el ESP32.
+
+### Configuración de platformio.ini
+Este archivo administra el entorno y descarga las dependencias automáticamente. Asegúrate de que contenga la siguiente estructura:
+
+```ini
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps =
+  marcoschwartz/LiquidCrystal_I2C
+  madhephaestus/ESP32Servo
+  knolleary/PubSubClient
+  bblanchon/ArduinoJson
+```
+
+### Pasos para Compilar
+
+1. Abre la carpeta del proyecto en VSCode.
+2. Espera a que la extensión de PlatformIO se inicialice.
+3. Ejecuta la compilación con el atajo de teclado:
+
+```bash
+Ctrl + Shift + B
+```
+
+4. La terminal descargará las librerías necesarias y mostrará un mensaje de SUCCESS.
+
+### Librerías del Firmware
+
+- **WiFi.h** - Gestión de conexión de red.
+- **PubSubClient** - Comunicación mediante protocolo MQTT.
+- **LiquidCrystal_I2C** - Control del display alfanumérico.
+- **NewPing** - Optimización del sensor ultrasónico.
+- **Keypad** - Mapeo y lectura de la matriz de botones físicos.
