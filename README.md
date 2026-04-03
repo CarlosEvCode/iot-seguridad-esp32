@@ -109,29 +109,33 @@ iot-seguridad-esp32/
 - Se actualiza cada 2 segundos via polling
 - Indicador visual de conexión al servidor
 
-
 ## SECCIÓN 3: INSTALACIÓN DE HERRAMIENTAS
 
 ### VSCode + Extensión Wokwi Simulator
+
 1. Descarga el instalador desde `code.visualstudio.com`.
 2. En la pestaña de Extensiones (Ctrl+Shift+X), busca e instala **Wokwi Simulator**.
 3. El proyecto reconocerá automáticamente el archivo `diagram.json` al abrir la carpeta.
 4. Ejecuta la simulación abriendo `main.cpp` y presionando `Shift + F5`.
 
 ### PlatformIO
+
 1. En Extensiones de VSCode, busca e instala **PlatformIO IDE**.
 2. Este framework gestiona automáticamente las librerías y la compilación para el ESP32.
 3. Utiliza los iconos de la barra inferior para compilar (Check) y subir el código.
 
 ### Node.js y npm
+
 1. Descarga la versión LTS desde `nodejs.org`.
 2. Verifica la instalación en terminal:
+
 ```bash
 node --version
 npm --version
 ```
 
 ## SECCIÓN 4: INSTALACIÓN DE NODE-RED
+
 ¿Qué es Node-RED y por qué lo usamos?
 Node-RED es una herramienta de programación visual que funciona como el "Middleware" del sistema. Se encarga de recibir los eventos MQTT del ESP32, procesarlos y almacenarlos en la base de datos.
 
@@ -158,6 +162,7 @@ Haz clic en instalar.
 Detén el servidor en la terminal (Ctrl+C) y vuelve a ejecutar node-red para aplicar los cambios.
 
 ## SECCIÓN 5: INSTALACIÓN DE MONGODB
+
 ¿Qué es MongoDB y por qué lo usamos?
 Es una base de datos NoSQL que almacena la información en formato JSON nativo, ideal para procesar y guardar directamente los datos IoT generados por Node-RED.
 
@@ -175,7 +180,6 @@ Para verificar que el servicio está activo, abre PowerShell y ejecuta:
 ```powershell
 Get-Service -Name MongoDB
 ```
-
 
 Instalación en Linux (Ubuntu/Debian)
 
@@ -197,3 +201,41 @@ Nombre de BD: puerta_inteligente
 
 Colección: eventos_puerta
 (La estructura se creará automáticamente cuando Node-RED inserte el primer registro).
+
+## 6. Configuración de Wokwi Simulator
+
+### ¿Qué es Wokwi?
+
+Wokwi es un simulador de circuitos electrónicos integrado en VSCode. Permite probar el código del ESP32 sin necesidad de hardware físico, ideal para desarrollo y pruebas rápidas.
+
+### Archivos de Configuración
+
+**diagram.json**
+
+- Define la estructura del circuito virtual
+- Especifica qué componentes se utilizan y sus conexiones
+
+**wokwi.toml**
+
+- Archivo de configuración del simulador
+- Controla velocidad de ejecución y comportamiento general
+- Personalización de cómo se ejecuta la simulación
+
+### Cómo Ejecutar la Simulación
+
+1. Abrir el archivo `diagram.json` en VSCode
+2. Se abre automáticamente la ventana del simulador Wokwi
+3. Hacer clic en el botón **Run** (botón verde de reproducción)
+4. El simulador comienza a ejecutar el código
+5. Interactuar con los componentes (presionar botones, ver pantalla LCD, etc)
+
+### Componentes en el Proyecto
+
+El simulador incluye:
+
+- **ESP32 microcontroller** - Cerebro del sistema
+- **Pantalla LCD** - Muestra mensajes de estado
+- **Sensor ultrasónico** - Detecta proximidad
+- **Teclado 4x4** - Permite ingresar contraseña
+- **LED** - Indicador visual de estado
+- **Buzzer** - Indicador sonoro
