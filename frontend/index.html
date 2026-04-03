@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Puerta Inteligente</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-bar">
+        <h1>SISTEMA DE ACCESO IOT</h1>
+        <div class="connection-status">
+            <span id="api-indicator" class="dot disconnected"></span>
+            <span id="api-text">Verificando conexion...</span>
+        </div>
+    </header>
+
+    <div class="layout">
+        
+        <main class="dashboard">
+            <article class="card">
+                <h2>ESTADO DE CERRADURA</h2>
+                <div class="status-indicator neutral" id="puerta-estado">ESPERANDO...</div>
+                <div class="data-row">
+                    <span>Ultima actualizacion:</span>
+                    <span class="data-value" id="puerta-hora">--:--:--</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>RADAR DE PROXIMIDAD</h2>
+                <div class="status-indicator neutral" id="distancia-valor">-- cm</div>
+                <div class="data-row">
+                    <span>Estado del area:</span>
+                    <span class="data-value" id="distancia-estado">Analizando...</span>
+                </div>
+            </article>
+        </main>
+
+        <section class="history-section">
+            <h2>HISTORIAL DE EVENTOS RECIENTES</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>FECHA / HORA</th>
+                            <th>TIPO DE EVENTO</th>
+                            <th>RESULTADO DEL ACCESO</th>
+                            <th>DISTANCIA DETECTADA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-eventos">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
