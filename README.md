@@ -243,9 +243,11 @@ El simulador incluye:
 ## SECCIÓN 7: COMPILACIÓN DEL FIRMWARE
 
 ### Proceso de Compilación
+
 El código fuente reside en la ruta `src/main.cpp`. Se utiliza el entorno de PlatformIO para compilar el firmware que será ejecutado por el ESP32.
 
 ### Configuración de platformio.ini
+
 Este archivo administra el entorno y descarga las dependencias automáticamente. Asegúrate de que contenga la siguiente estructura:
 
 ```ini
@@ -279,3 +281,62 @@ Ctrl + Shift + B
 - **LiquidCrystal_I2C** - Control del display alfanumérico.
 - **NewPing** - Optimización del sensor ultrasónico.
 - **Keypad** - Mapeo y lectura de la matriz de botones físicos.
+
+## 8. Configuración de Node-RED
+
+### Flujo de Datos General
+
+Node-RED recibe eventos MQTT del ESP32 y los procesa para guardarlos en MongoDB:
+
+1. **Entrada** - Recibe mensajes MQTT en dos tópicos:
+   - `puerta-inteligente/intentos` - Eventos de validación de acceso
+   - `puerta-inteligente/puerta` - Eventos de estado de la puerta
+
+2. **Procesamiento** - Transforma los datos:
+   - Parsea JSON recibido
+   - Agrega timestamp automáticamente
+   - Estructura uniforme del documento
+
+3. **Almacenamiento** - Guarda en MongoDB:
+   - Base de datos: `puerta_inteligente`
+   - Colección: `eventos_puerta`
+   - Documento contiene: tipo, resultado/estado, distancia_cm, createdAt
+
+4. **Resultado** - Evento guardado con fecha de registro
+
+### Importar el Flow al Proyecto
+
+1. Abrir Node-RED en navegador: `http://localhost:1880`
+2. Hacer clic en el botón hamburguesa (☰)
+3. Seleccionar **Import**
+4. Seleccionar archivo: `node-red/flow.json`
+5. Hacer clic en **Import**
+6. Hacer clic en el botón **Deploy**
+
+### Configurar Conexión MQTT
+
+El flow utiliza la siguiente configuración MQTT (automática):
+
+- **Broker:** broker.hivemq.com
+- **Puerto:** 1883
+- **Conexión:** Automática al iniciar Node-RED
+
+No requiere configuración manual. Se conecta automáticamente.
+
+### Configurar Conexión MongoDB
+
+1. En la ventana de Node-RED, hacer clic derecho sobre el nodo **MongoDB Local**
+2. Seleccionar **Edit**
+3. Verificar la configuración:
+   - **URL:** `mongodb://localhost:27017`
+   - **Database:** `puerta_inteligente`
+   - **Collection:** `eventos_puerta`
+4. Hacer clic en **Done** para guardar
+
+### Verificación
+
+Después de importar y configurar:
+
+- La consola de Node-RED (abajo) no debe mostrar errores en rojo
+- MongoDB Compass debe mostrar documentos llegando en la colección `eventos_puerta`
+- El flow debe indicar estado "connected" en los nodos MQTT y MongoDB
