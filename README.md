@@ -344,9 +344,11 @@ Después de importar y configurar:
 ## SECCIÓN 9: CONFIGURACIÓN DEL BACKEND
 
 ### Descripción
+
 El backend es una API REST construida con Node.js y Express. Su función principal es actuar como un intermediario seguro entre la base de datos MongoDB y la interfaz de usuario, garantizando que no se expongan conexiones directas ni credenciales de base de datos en el cliente.
 
 ### Instalación y Ejecución
+
 Abre tu terminal, navega hasta la carpeta `backend/` del proyecto y ejecuta los siguientes comandos:
 
 ```bash
@@ -408,3 +410,91 @@ Para mantener la información en tiempo real sin saturar la red, la aplicación 
 // El panel web se actualiza automáticamente cada 2 segundos
 setInterval(refrescarDatos, 2000);
 ```
+
+## 11. Guía Rápida de Inicio
+
+Sigue estos pasos en orden para iniciar el sistema completo:
+
+**Paso 1: Verificar MongoDB**
+
+Windows: Abre Servicios (Win+R → services.msc) y busca MongoDB. Debe estar en estado "Running".
+
+Linux: En terminal, ejecuta:
+
+```bash
+sudo systemctl status mongodb
+```
+
+**Paso 2: Compilar y ejecutar simulador**
+
+1. Abre el archivo `diagram.json` en VSCode
+2. Haz clic en el botón **Run** en el simulador Wokwi
+3. Espera a que se inicie el simulador y el código comience a ejecutarse
+
+**Paso 3: Iniciar Node-RED**
+
+1. Abre una terminal
+2. Ejecuta: `node-red`
+3. Abre en navegador: `http://localhost:1880`
+4. Importa el archivo `node-red/flow.json` (ver sección 8)
+5. Verifica en la consola que no hay errores
+
+**Paso 4: Iniciar Backend**
+
+1. Abre terminal en la carpeta `backend`
+2. Ejecuta: `node server.js`
+3. Debe mostrar: "Servidor corriendo en puerto 3000"
+
+**Paso 5: Iniciar Frontend**
+
+1. Abre terminal en la carpeta `frontend`
+2. Ejecuta: `python3 -m http.server 8080`
+3. Abre en navegador: `http://localhost:8080`
+
+**Paso 6: Probar el Sistema**
+
+1. Interactúa con el simulador (presiona botones, acerca sensores)
+2. El simulador envía eventos a MQTT
+3. Node-RED recibe y guarda en MongoDB
+4. El dashboard se actualiza cada 2 segundos
+5. Verifica que los datos aparecen en la tabla del frontend
+
+**Resultado Esperado:**
+
+- Dashboard muestra eventos en vivo
+- Tabla se actualiza con nuevos eventos
+- Indicador de conexión en verde
+- Sin errores en consolas
+
+---
+
+## 12. Arquitectura del Sistema
+
+### Componentes del Sistema
+
+```
+Simulador Wokwi (ESP32 virtual) → Ejecuta código, simula sensores
+                ↓
+MQTT (broker.hivemq.com) → Comunicación entre ESP32 y Node-RED
+                ↓
+Node-RED → Recibe eventos, procesa y guarda
+                ↓
+MongoDB → Base de datos con eventos
+                ↓
+Backend API (puerto 3000) → Proporciona datos via HTTP
+                ↓
+Frontend Dashboard (puerto 8080) → Visualiza datos
+```
+
+### Flujo de un Evento
+
+1. Usuario interactúa con el simulador
+2. Simulador detecta acción
+3. ESP32 publica evento a MQTT
+4. Node-RED recibe el evento MQTT
+5. Node-RED agrega timestamp y estructura el documento
+6. Node-RED guarda en MongoDB
+7. Frontend hace polling cada 2 segundos a backend
+8. Backend consulta últimos 10 eventos de MongoDB
+9. Frontend recibe JSON y actualiza la pantalla
+10. Usuario ve cambio en el dashboard
