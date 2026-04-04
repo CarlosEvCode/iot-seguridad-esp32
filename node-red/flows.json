@@ -195,7 +195,7 @@
         "usetls": false,
         "protocolVersion": 4,
         "keepalive": 60,
-        "cleansession": true,
+        "cleansession": false,
         "autoUnsubscribe": true,
         "birthTopic": "",
         "birthQos": "0",
