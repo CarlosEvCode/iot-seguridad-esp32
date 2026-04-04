@@ -1,0 +1,250 @@
+[
+    {
+        "id": "a1e0ce32b7c35113",
+        "type": "tab",
+        "label": "Puerta Inteligente",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d094f40774a56195",
+        "type": "mqtt in",
+        "z": "a1e0ce32b7c35113",
+        "name": "MQTT Intentos",
+        "topic": "puerta-inteligente/intentos",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "hivemq-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "01f8f83a25d2b49b"
+            ]
+        ]
+    },
+    {
+        "id": "55970ad0ddc9041b",
+        "type": "mqtt in",
+        "z": "a1e0ce32b7c35113",
+        "name": "MQTT Puerta",
+        "topic": "puerta-inteligente/puerta",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "hivemq-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "056da9e53e60a8d7"
+            ]
+        ]
+    },
+    {
+        "id": "01f8f83a25d2b49b",
+        "type": "json",
+        "z": "a1e0ce32b7c35113",
+        "name": "Parse JSON Intentos",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "fb29b5647e897c35",
+                "1c93e9db3f29a62a"
+            ]
+        ]
+    },
+    {
+        "id": "056da9e53e60a8d7",
+        "type": "json",
+        "z": "a1e0ce32b7c35113",
+        "name": "Parse JSON Puerta",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "16d038523d21e56c",
+                "37ed707ca758a893"
+            ]
+        ]
+    },
+    {
+        "id": "fb29b5647e897c35",
+        "type": "function",
+        "z": "a1e0ce32b7c35113",
+        "name": "Agregar Timestamp",
+        "func": "msg.payload.createdAt = new Date();\nmsg.payload.tipo = \"intento\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "df0307b1c575f022"
+            ]
+        ]
+    },
+    {
+        "id": "16d038523d21e56c",
+        "type": "function",
+        "z": "a1e0ce32b7c35113",
+        "name": "Agregar Timestamp",
+        "func": "msg.payload.createdAt = new Date();\nmsg.payload.tipo = \"puerta\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "6d4ff925e5ddbb69"
+            ]
+        ]
+    },
+    {
+        "id": "df0307b1c575f022",
+        "type": "mongodb4",
+        "z": "a1e0ce32b7c35113",
+        "clientNode": "mongodb-local-client",
+        "mode": "collection",
+        "collection": "eventos_puerta",
+        "operation": "insertOne",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "Guardar Intentos",
+        "x": 750,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d4ff925e5ddbb69",
+        "type": "mongodb4",
+        "z": "a1e0ce32b7c35113",
+        "clientNode": "mongodb-local-client",
+        "mode": "collection",
+        "collection": "eventos_puerta",
+        "operation": "insertOne",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "Guardar Puerta",
+        "x": 750,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1c93e9db3f29a62a",
+        "type": "debug",
+        "z": "a1e0ce32b7c35113",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "37ed707ca758a893",
+        "type": "debug",
+        "z": "a1e0ce32b7c35113",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "hivemq-broker",
+        "type": "mqtt-broker",
+        "name": "HiveMQ",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "node-red-puerta-inteligente",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "mongodb-local-client",
+        "type": "mongodb4-client",
+        "name": "MongoDB Local",
+        "protocol": "mongodb",
+        "hostname": "localhost",
+        "port": "27017",
+        "dbName": "puerta_inteligente",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": false,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "mongodb://localhost:27017/",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-advanced"
+    },
+    {
+        "id": "9e2e8c315f9c0ecb",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-mongodb4": "3.4.0"
+        }
+    }
+]
