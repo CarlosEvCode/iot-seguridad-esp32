@@ -2,6 +2,9 @@
 
 Sistema IoT de control de acceso que detecta proximidad, valida contraseña numérica y registra eventos. Combina simulación Wokwi, MQTT, Node-RED, MongoDB y dashboard web.
 
+> **Contraseña configurada:** `1234`  
+> **Wokwi:** Requiere configurar licencia con tu cuenta Google desde VSCode (clic en el icono de usuario en la extensión Wokwi).
+
 ## 1. Arquitectura
 
 ```
@@ -38,27 +41,34 @@ Frontend Dashboard (:8080)
 
 ## 3. Instalación Rápida
 
+### Extensiones VSCode
+En VSCode, instala las siguientes extensiones:
+1. **PlatformIO IDE** - Para compilar el firmware ESP32
+2. **Wokwi Simulator** - Para simular el circuito
+
 ### Requisitos
 - VSCode + PlatformIO + Wokwi Simulator (extensiones)
+- **Wokwi:** Inicia sesión con tu cuenta Google desde VSCode (extensión Wokwi) para activar la licencia
 - Node.js v14+
 - MongoDB (local)
 - Node-RED
 
 ### Software Setup
 
+**Instalar extensiones Node-RED:**
+```bash
+# Instalar Node-RED globalmente
+npm install -g node-red
+
+# En Node-RED: Menu → Manage Palette → Install
+# Buscar e instalar: node-red-node-mongodb4
+```
+
 **Node.js & npm:**
 ```bash
 node --version  # Verificar instalación
 npm --version
 ```
-
-**Node-RED (global):**
-```bash
-npm install -g node-red
-node-red  # Acceder en http://localhost:1880
-```
-
-En Node-RED: Manage Palette → Install `node-red-node-mongodb`
 
 **MongoDB Compass (Gestor Visual)**
 
@@ -172,78 +182,27 @@ Si no ves documentos:
 - Verifica que Node-RED está corriendo (sin errores)
 - Espera 5-10 segundos (el flow tarda en procesar)
 
-### Backend: Inicio y Verificación
+### Backend: Instalar dependencias e iniciar
 
-**Windows (PowerShell o CMD):**
-```powershell
-cd backend
-npm install
-npm start
-# o: node server.js
-```
-
-**Linux (Terminal):**
 ```bash
 cd backend
 npm install
 npm start
 # o: node server.js
+# Debe mostrar: [EXITO] Conectado a MongoDB | [SISTEMA] Servidor en puerto 3000
 ```
 
-Debe mostrar:
-```
-[EXITO] Conectado exitosamente a MongoDB
-[SISTEMA] Servidor corriendo en el puerto 3000
-```
+**Verificar:** Abre http://localhost:3000/api/datos en el navegador (debe devolver JSON o [])
 
-**Verificar que funciona:**
+### Frontend: Iniciar servidor
 
-Abre una nueva terminal/PowerShell y ejecuta:
-
-Windows (PowerShell):
-```powershell
-Invoke-WebRequest http://localhost:3000/api/datos
-# Debe devolver JSON con los eventos
-```
-
-Linux/macOS:
-```bash
-curl http://localhost:3000/api/datos
-# Debe devolver JSON con los eventos
-```
-
-Si no devuelve datos:
-- Verifica que MongoDB está corriendo
-- Verifica que Node-RED ha procesado eventos
-- Revisa la consola del backend para errores
-
-### Frontend: Inicio y Verificación
-
-**Windows (PowerShell):**
-```powershell
-cd frontend
-# Opción A: Python 3
-python -m http.server 8080
-
-# Opción B: VSCode Live Server (clic derecho en index.html → Open with Live Server)
-```
-
-**Linux (Terminal):**
 ```bash
 cd frontend
-python3 -m http.server 8080
-
-# O en macOS
 python -m http.server 8080
+# o: python3 -m http.server 8080
 ```
 
 Abre en navegador: http://localhost:8080
-
-**Verificar que funciona:**
-- La tabla debe mostrar eventos (últimos 10)
-- Se actualiza cada 2 segundos (mira el timestamp)
-- El indicador de conexión debe estar en VERDE
-- Si ves "Conectando..." en rojo, revisa que backend está corriendo
 
 ## 6. Inicio Rápido
 
@@ -346,6 +305,12 @@ Indicador de conexión está en VERDE
 MongoDB Compass muestra documentos llegando
 Serial Monitor del simulador muestra JSON enviado
 Sin errores en ninguna terminal
+
+## Notas
+
+- **Contraseña de acceso:** La clave configurada como correcta es `1234`
+- **Wokwi:** Si el simulador no funciona, verifica tener la licencia configurada. En VSCode, abre la extensión Wokwi e inicia sesión con tu cuenta de Google
+- **Puerto serial:** Si deseas probar con Arduino Uno físico, conecta al puerto COM y configura Node-RED para recibir vía serial
 
 
 ## 7. Arquitectura Técnica
